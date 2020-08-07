@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vXU-gf-pRX">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="xda-ez-isc">
+            <objects>
+                <viewController id="vXU-gf-pRX" customClass="ViewController" customModule="GXCardViewSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="F37-0J-EbP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cw9-pd-eY5" customClass="GXCardView" customModule="GXCardViewSample" customModuleProvider="target">
+                                <rect key="frame" x="57" y="273" width="300" height="350"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="7Ns-X8-MQv"/>
+                                    <constraint firstAttribute="height" constant="350" id="INM-zI-p33"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQp-G1-g7q">
+                                <rect key="frame" x="40" y="769" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="7gx-g4-hS3"/>
+                                    <constraint firstAttribute="width" constant="46" id="pXj-Bp-ylV"/>
+                                </constraints>
+                                <state key="normal" title="左"/>
+                                <connections>
+                                    <action selector="leftButtonClicked:" destination="vXU-gf-pRX" eventType="touchUpInside" id="yqh-yf-ray"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zxE-Bh-PgG">
+                                <rect key="frame" x="328" y="769" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="6Lp-cx-K3O"/>
+                                    <constraint firstAttribute="height" constant="30" id="RlM-T6-4nE"/>
+                                </constraints>
+                                <state key="normal" title="右"/>
+                                <connections>
+                                    <action selector="rightButtonClick:" destination="vXU-gf-pRX" eventType="touchUpInside" id="Foo-Jk-HMD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A04-HT-GqD">
+                                <rect key="frame" x="184" y="769" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="BdP-6N-SgB"/>
+                                    <constraint firstAttribute="height" constant="30" id="ck2-mq-ByE"/>
+                                </constraints>
+                                <state key="normal" title="刷新"/>
+                                <connections>
+                                    <action selector="updateButtonClick:" destination="vXU-gf-pRX" eventType="touchUpInside" id="rDO-Qg-OHh"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.86274509799999999" green="0.63137254899999995" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="ckv-0y-XEt" firstAttribute="trailing" secondItem="zxE-Bh-PgG" secondAttribute="trailing" constant="40" id="9mO-NX-c11"/>
+                            <constraint firstItem="ckv-0y-XEt" firstAttribute="bottom" secondItem="rQp-G1-g7q" secondAttribute="bottom" constant="63" id="JBe-bP-ZvI"/>
+                            <constraint firstItem="rQp-G1-g7q" firstAttribute="leading" secondItem="ckv-0y-XEt" secondAttribute="leading" constant="40" id="Mb8-XW-pCc"/>
+                            <constraint firstItem="ckv-0y-XEt" firstAttribute="bottom" secondItem="A04-HT-GqD" secondAttribute="bottom" constant="63" id="aWE-gs-cZ0"/>
+                            <constraint firstItem="ckv-0y-XEt" firstAttribute="bottom" secondItem="zxE-Bh-PgG" secondAttribute="bottom" constant="63" id="do6-w4-5R0"/>
+                            <constraint firstItem="cw9-pd-eY5" firstAttribute="centerY" secondItem="F37-0J-EbP" secondAttribute="centerY" id="irf-RQ-As8"/>
+                            <constraint firstItem="A04-HT-GqD" firstAttribute="centerX" secondItem="F37-0J-EbP" secondAttribute="centerX" id="ls5-ff-t4i"/>
+                            <constraint firstItem="cw9-pd-eY5" firstAttribute="centerX" secondItem="F37-0J-EbP" secondAttribute="centerX" id="wQT-VN-Vf4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ckv-0y-XEt"/>
+                    </view>
+                    <connections>
+                        <outlet property="cardView" destination="cw9-pd-eY5" id="ojU-Rb-vdt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mlj-do-HN5" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="128.18590704647679"/>
+        </scene>
+    </scenes>
+</document>

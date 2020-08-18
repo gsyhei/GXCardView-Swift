@@ -72,7 +72,7 @@ class GXCardViewCell: UIView {
 }
 
 extension GXCardViewCell {
-    func remove(swipe direction: GXCardViewCell.SwipeDirection) {
+    func remove(swipe direction: SwipeDirection) {
         self.remove(direction: direction, isPan: false)
     }
 }
@@ -81,7 +81,7 @@ fileprivate extension GXCardViewCell {
     func degreesToRadians(angle: CGFloat) -> CGFloat {
         return (angle / 180.0 * CGFloat.pi)
     }
-    func transform(direction: GXCardViewCell.SwipeDirection) -> CGAffineTransform {
+    func transform(direction: SwipeDirection) -> CGAffineTransform {
         switch direction {
         case .left:
             let transRotation = CGAffineTransform(rotationAngle: -degreesToRadians(angle: self.maxAngle))
@@ -92,7 +92,7 @@ fileprivate extension GXCardViewCell {
         default: return .identity
         }
     }
-    func endCenter(direction: GXCardViewCell.SwipeDirection) -> CGPoint {
+    func endCenter(direction: SwipeDirection) -> CGPoint {
         switch direction {
         case .left:
             let endCenterX = -(GX_ScreenWidth*0.5 + self.frame.width)
@@ -144,12 +144,12 @@ fileprivate extension GXCardViewCell {
                 self.transform = .identity
         })
     }
-    func didRemove(direction: GXCardViewCell.SwipeDirection) {
+    func didRemove(direction: SwipeDirection) {
         self.transform = .identity
         self.removeFromSuperview()
         self.cellDelegate?.cardViewCell(self, didRemoveAt: direction)
     }
-    func remove(direction: GXCardViewCell.SwipeDirection, isPan stateEnded: Bool) {
+    func remove(direction: SwipeDirection, isPan stateEnded: Bool) {
         let snapshotView = self.snapshotView(afterScreenUpdates: false) ?? UIView()
         snapshotView.transform = self.transform
         self.superview?.superview?.addSubview(snapshotView)

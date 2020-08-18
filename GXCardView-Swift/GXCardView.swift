@@ -214,7 +214,7 @@ fileprivate extension GXCardView {
         for (index, cell) in self.visibleCells.enumerated() {
             if (index == self.visibleCells.count - 1) {
                 cell.isUserInteractionEnabled = true
-                if (delegate?.responds(to: #selector(delegate?.cardView(_:didDisplay:forItemAt:))))! {
+                if (delegate?.responds(to: #selector(delegate?.cardView(_:didDisplay:forItemAt:))) ?? false) {
                     self.delegate?.cardView?(self, didDisplay: cell, forItemAt: cell.index)
                 }
             }
@@ -247,17 +247,17 @@ extension GXCardView: GXCardViewCellDelagate {
         }
         self.updateLayoutVisibleCells(animated: true)
 
-        if (delegate?.responds(to: #selector(delegate?.cardView(_:didRemove:forItemAt:direction:))))! {
+        if (delegate?.responds(to: #selector(delegate?.cardView(_:didRemove:forItemAt:direction:))) ?? false) {
             self.delegate?.cardView?(self, didRemove: cell, forItemAt: cellIndex, direction: direction)
         }
         if cellIndex == count - 1 {
-            if (delegate?.responds(to: #selector(delegate?.cardView(_:didRemoveLast:forItemAt:direction:))))! {
+            if (delegate?.responds(to: #selector(delegate?.cardView(_:didRemoveLast:forItemAt:direction:))) ?? false) {
                 self.delegate?.cardView?(self, didRemoveLast: cell, forItemAt: cellIndex, direction: direction)
             }
         }
     }
     func cardViewCell(_ cell: GXCardViewCell, didMoveAt point: CGPoint, direction: GXCardViewCell.SwipeDirection) {
-        if (delegate?.responds(to: #selector(delegate?.cardView(_:didMove:forItemAt:move:direction:))))! {
+        if (delegate?.responds(to: #selector(delegate?.cardView(_:didMove:forItemAt:move:direction:))) ?? false) {
             self.delegate?.cardView?(self, didMove: cell, forItemAt: cell.index, move: point, direction: direction)
         }
     }

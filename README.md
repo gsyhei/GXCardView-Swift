@@ -30,24 +30,18 @@ GXCardViewDataSource
 
 ```swift
 func numberOfItems(in cardView: GXCardView) -> Int
-func cardView(_ cardView: GXCardView, cellForItemAt index: Int) -> GXCardViewCell
+func cardView(_ cardView: GXCardView, cellForItemAt indexPath: IndexPath) -> GXCardCell
 ```
 
 GXCardViewDelegate
 --
 
 ```swift
-@objc optional func cardView(_ cardView: GXCardView, didRemove cell: GXCardViewCell, forItemAt index: Int, direction: GXCardViewCell.SwipeDirection)
-@objc optional func cardView(_ cardView: GXCardView, didRemoveLast cell: GXCardViewCell, forItemAt index: Int, direction: GXCardViewCell.SwipeDirection)
-@objc optional func cardView(_ cardView: GXCardView, didDisplay cell: GXCardViewCell, forItemAt index: Int)
-@objc optional func cardView(_ cardView: GXCardView, didMove cell: GXCardViewCell, forItemAt index: Int, move point: CGPoint, direction: GXCardViewCell.SwipeDirection)
-```
-
-重载数据 
---
-
-```swift
-func reloadData(animated: Bool = false, to index: Int? = nil)
+@objc optional func cardView(_ cardView: GXCardView, didSelectItemAt index: Int)
+@objc optional func cardView(_ cardView: GXCardView, didRemove cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection)
+@objc optional func cardView(_ cardView: GXCardView, didRemoveLast cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection)
+@objc optional func cardView(_ cardView: GXCardView, didDisplay cell: GXCardCell, forItemAt index: Int)
+@objc optional func cardView(_ cardView: GXCardView, didMove cell: GXCardCell, forItemAt index: Int, move point: CGPoint, direction: GXCardCell.SwipeDirection)
 ```
 
 可以设置参数
@@ -55,17 +49,15 @@ func reloadData(animated: Bool = false, to index: Int? = nil)
 
 ```swift
 /// 卡片可见数量(默认3)
-open var visibleCount: Int = 3
-/// 行间距(默认10.0，可自行计算scale比例来做间距)
-open var lineSpacing: CGFloat = 10.0
-/// 列间距(默认10.0，可自行计算scale比例来做间距)
-open var interitemSpacing: CGFloat = 10.0
-/// 侧滑最大角度(默认15°)
-open var maxAngle: CGFloat = 15.0
-/// 最大移除距离(默认屏幕的1/4)
-open var maxRemoveDistance: CGFloat = GX_ScreenWidth * 0.25
-/// 是否重复(默认false)
-open var isRepeat: Bool = false
+ open var visibleCount: Int = 3
+ /// 卡片与卡片之间的insets(从上至下，正负皆可)
+ open var cardInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: -10, right: 10)
+ /// 侧滑最大角度(默认15°)
+ open var maxAngle: CGFloat = 15.0
+ /// 是否重复(默认false)
+ open var isRepeat: Bool = false
+ /// 最大移除距离(默认屏幕的1/4)
+ open var maxRemoveDistance: CGFloat = GX_ScreenWidth * 0.25
 ```
 
 License

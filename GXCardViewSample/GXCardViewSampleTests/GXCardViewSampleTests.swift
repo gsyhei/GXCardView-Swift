@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import GXCardViewSample
 
 class GXCardViewSampleTests: XCTestCase {
 

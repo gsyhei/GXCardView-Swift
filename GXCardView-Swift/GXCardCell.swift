@@ -1,8 +1,8 @@
 //
-//  GXCardViewCell.swift
+//  GXCardCell.swift
 //  GXCardViewSample
 //
-//  Created by Gin on 2020/8/5.
+//  Created by Gin on 2020/9/8.
 //  Copyright © 2020 gin. All rights reserved.
 //
 
@@ -14,7 +14,7 @@ fileprivate extension CGPoint {
     }
 }
 
-extension GXCardViewCell {
+extension GXCardCell {
     @objc enum SwipeDirection: Int {
         case none  = 0
         case left  = 1
@@ -22,43 +22,41 @@ extension GXCardViewCell {
     }
 }
 
-protocol GXCardViewCellDelagate: NSObjectProtocol {
-    func cardViewCell(_ cell: GXCardViewCell, didRemoveAt direction: GXCardViewCell.SwipeDirection)
-    func cardViewCell(_ cell: GXCardViewCell, didMoveAt point: CGPoint, direction: GXCardViewCell.SwipeDirection)
+protocol GXCardCellDelagate: NSObjectProtocol {
+    func cardCell(_ cell: GXCardCell, didRemoveAt direction: GXCardCell.SwipeDirection)
+    func cardCell(_ cell: GXCardCell, didMoveAt point: CGPoint, direction: GXCardCell.SwipeDirection)
 }
 
-class GXCardViewCell: UIView {
-    private(set) var currentPoint: CGPoint = .zero
-    var reuseIdentifier: String?
-    weak var cellDelegate: GXCardViewCellDelagate?
-    var maxAngle: CGFloat = 0
-    var maxRemoveDistance: CGFloat = 0
-    var index: Int = 0
+class GXCardCell: UICollectionViewCell {
+    private var originalTransform: CGAffineTransform = .identity
+    private var currentPoint: CGPoint = .zero
     
-    convenience init(frame: CGRect = .zero, withReuseIdentifier identifier: String) {
+    open weak var delegate: GXCardCellDelagate?
+    open weak var cardView: GXCardCView!
+    open var maxAngle: CGFloat = 0
+    open var maxRemoveDistance: CGFloat = 0
+    
+    convenience override init(frame: CGRect = .zero) {
         self.init(frame: frame)
-        self.setupCardViewCell(withReuseIdentifier: identifier)
+        self.addPanGestureRecognizer()
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addPanGestureRecognizer()
     }
-    
-    func setupCardViewCell(withReuseIdentifier identifier: String) {
-        self.reuseIdentifier = identifier
-        self.addPanGestureRecognizer()
-    }
-    
+
     private func addPanGestureRecognizer() {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(self.panGestureRecognizer(pan:)))
         self.addGestureRecognizer(pan)
     }
     
     @objc private func panGestureRecognizer(pan: UIPanGestureRecognizer) {
+        guard self.isShowFirstCell() else { return }
         switch pan.state {
         case .began:
             self.currentPoint = .zero
+            self.originalTransform = self.transform
         case .changed:
             let movePoint = pan.translation(in: pan.view)
             self.didPanStateChanged(move: movePoint)
@@ -71,35 +69,40 @@ class GXCardViewCell: UIView {
     }
 }
 
-extension GXCardViewCell {
+extension GXCardCell {
     func remove(swipe direction: SwipeDirection) {
         self.remove(direction: direction, isPan: false)
     }
 }
 
-fileprivate extension GXCardViewCell {
+fileprivate extension GXCardCell {
+    func isShowFirstCell() -> Bool {
+        let index = self.cardView.collectionView.indexPath(for: self)?.item ?? 0
+        let firstIndex = Int(ceil(self.cardView.collectionView.contentOffset.y/self.cardView.collectionView.frame.height))
+        return index == firstIndex
+    }
     func degreesToRadians(angle: CGFloat) -> CGFloat {
         return (angle / 180.0 * CGFloat.pi)
     }
     func transform(direction: SwipeDirection) -> CGAffineTransform {
         switch direction {
         case .left:
-            let transRotation = CGAffineTransform(rotationAngle: -degreesToRadians(angle: self.maxAngle))
-            return transRotation.translatedBy(x: self.frame.height, y: self.frame.height*0.25)
+            return self.originalTransform.rotated(by: -degreesToRadians(angle: self.maxAngle))
         case .right:
-            let transRotation = CGAffineTransform(rotationAngle: degreesToRadians(angle: self.maxAngle))
-            return transRotation.translatedBy(x: self.frame.height, y: self.frame.height*0.25)
-        default: return .identity
+            return self.originalTransform.rotated(by: degreesToRadians(angle: self.maxAngle))
+        default: return self.originalTransform
         }
     }
-    func endCenter(direction: SwipeDirection) -> CGPoint {
+    func endCenter(direction: SwipeDirection, view: UIView) -> CGPoint {
+        let rect: CGRect = self.cardView.collectionView.convert(self.frame, to: self.cardView)
+        let centerY: CGFloat = view.center.y + rect.origin.y - view.frame.origin.y
         switch direction {
         case .left:
             let endCenterX = -(GX_ScreenWidth*0.5 + self.frame.width)
-            return CGPoint(x: endCenterX, y: self.center.y)
+            return CGPoint(x: endCenterX, y: centerY)
         case .right:
             let endCenterX = GX_ScreenWidth*0.5 + self.frame.width*1.5
-            return CGPoint(x: endCenterX, y: self.center.y)
+            return CGPoint(x: endCenterX, y: centerY)
         default: return .zero
         }
     }
@@ -110,17 +113,17 @@ fileprivate extension GXCardViewCell {
             moveScale = (moveScale > 0) ? 1.0 : -1.0
         }
         let angle = degreesToRadians(angle: self.maxAngle) * moveScale
-        let transRotation = CGAffineTransform(rotationAngle: angle)
+        let transRotation = self.originalTransform.rotated(by: angle)
         self.transform = transRotation.translatedBy(x: self.currentPoint.x, y: self.currentPoint.y)
         
         if (self.currentPoint.x < -self.maxRemoveDistance) {
-            self.cellDelegate?.cardViewCell(self, didMoveAt: self.currentPoint, direction: .left)
+            self.delegate?.cardCell(self, didMoveAt: self.currentPoint, direction: .left)
         }
         else if (self.currentPoint.x > self.maxRemoveDistance) {
-            self.cellDelegate?.cardViewCell(self, didMoveAt: self.currentPoint, direction: .right)
+            self.delegate?.cardCell(self, didMoveAt: self.currentPoint, direction: .right)
         }
         else {
-            self.cellDelegate?.cardViewCell(self, didMoveAt: self.currentPoint, direction: .none)
+            self.delegate?.cardCell(self, didMoveAt: self.currentPoint, direction: .none)
         }
     }
     func didPanStateEnded() {
@@ -141,29 +144,34 @@ fileprivate extension GXCardViewCell {
             initialSpringVelocity: GX_SpringVelocity,
             options: .curveEaseOut,
             animations: {
-                self.transform = .identity
+                self.transform = self.originalTransform
         })
     }
     func didRemove(direction: SwipeDirection) {
-        self.transform = .identity
+        self.transform = self.originalTransform
         self.removeFromSuperview()
-        self.cellDelegate?.cardViewCell(self, didRemoveAt: direction)
+        self.delegate?.cardCell(self, didRemoveAt: direction)
     }
     func remove(direction: SwipeDirection, isPan stateEnded: Bool) {
         let snapshotView = self.snapshotView(afterScreenUpdates: false) ?? UIView()
         snapshotView.transform = self.transform
-        self.superview?.superview?.addSubview(snapshotView)
+        self.cardView.addSubview(snapshotView)
+        let toCenter = self.endCenter(direction: direction, view: snapshotView)
+        snapshotView.center = CGPoint(x: snapshotView.center.x, y: toCenter.y)
         self.didRemove(direction: direction)
         
-        let toTransform: CGAffineTransform = self.transform(direction: direction)
-        let toCenter = self.endCenter(direction: direction)
-        UIView.animate(withDuration: GX_DefaultDuration, animations: {
-            snapshotView.center = toCenter
-            if !stateEnded {
-                snapshotView.transform = toTransform
+        let toTransform: CGAffineTransform = self.transform(direction: direction)        
+        UIView.animateKeyframes(withDuration: GX_DefaultDuration, delay: 0, options: .calculationModeLinear, animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1.0) {
+                snapshotView.center = toCenter
             }
-        }) { (finished) in
+            if !stateEnded {
+                UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.5) {
+                    snapshotView.transform = toTransform
+                }
+            }
+        }, completion: { (finished) in
             snapshotView.removeFromSuperview()
-        }
+        })
     }
 }

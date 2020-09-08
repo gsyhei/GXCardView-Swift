@@ -1,14 +1,14 @@
 //
-//  GXCardViewTestCell.swift
+//  GXCardTestCell.swift
 //  GXCardViewSample
 //
-//  Created by Gin on 2020/8/7.
+//  Created by Gin on 2020/9/8.
 //  Copyright © 2020 gin. All rights reserved.
 //
 
 import UIKit
 
-class GXCardViewTestCell: GXCardViewCell {
+class GXCardTestCell: GXCardCell {
     @IBOutlet weak var iconIView: UIImageView!
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var leftLabel: UILabel!
@@ -16,10 +16,9 @@ class GXCardViewTestCell: GXCardViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        self.layer.cornerRadius = 10.0;
-        self.layer.borderColor = UIColor.gray.cgColor;
-        self.layer.borderWidth = 1.0;
+        self.layer.cornerRadius = 10.0
+        self.layer.borderColor = UIColor.gray.cgColor
+        self.layer.borderWidth = 1.0
         self.layer.masksToBounds = true
     }
 }

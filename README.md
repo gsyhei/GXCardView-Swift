@@ -2,15 +2,13 @@
 卡片式布局(探探附近/QQ配对)，跟tableView一个用法，根据网友反应已经添加了重复循环属性，最新还添加了平滑加载更多数据。有建议可以联系QQ交流群:1101980843。
 
 # 喜欢就给个star哦，QQ交流群:1101980843
-
-先上demo菜单效果（比较朴素，请别在意）
---
-<p align="left">
-<a href><img src="https://github.com/gsyhei/GXCardView-Swift/blob/master/QQ.jpeg"></a>
+<p align="center">
+<img src="https://github.com/gsyhei/GXCardView-Swift/blob/master/QQ.jpeg">
 </p>
 
+先上demo菜单效果
+--
 ![](/GXCardView-Swift.gif '描述')
-
 
 Requirements
 --

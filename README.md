@@ -5,15 +5,20 @@
 
 先上demo菜单效果（比较朴素，请别在意）
 --
+<p align="left">
+<a href="https://github.com/gsyhei/GXRefresh"><img src="https://img.shields.io/badge/platform-ios-yellow.svg"></a>
+</p>
 
 ![](/GXCardView-Swift.gif '描述')
 
 
 Requirements
 --
-- iOS 9.0 or later
-- Xcode 11.0 or later
-- Swift 5.0
+<p align="left">
+<a href="https://github.com/gsyhei/GXRefresh"><img src="https://img.shields.io/badge/platform-ios-yellow.svg"></a>
+<a href="https://github.com/gsyhei/GXRefresh"><img src="https://img.shields.io/github/license/johnlui/Pitaya.svg?style=flat"></a>
+<a href="https://github.com/gsyhei/GXRefresh"><img src="https://img.shields.io/badge/language-Swift%204.2-orange.svg"></a>
+</p>
 
 Usage in you Podfile:
 --

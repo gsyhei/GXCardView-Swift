@@ -14,9 +14,9 @@
 Requirements
 --
 <p align="left">
-<a href="https://github.com/gsyhei/GXRefresh"><img src="https://img.shields.io/badge/platform-ios-yellow.svg"></a>
-<a href="https://github.com/gsyhei/GXRefresh"><img src="https://img.shields.io/github/license/johnlui/Pitaya.svg?style=flat"></a>
-<a href="https://github.com/gsyhei/GXRefresh"><img src="https://img.shields.io/badge/language-Swift%204.2-orange.svg"></a>
+<a href="https://github.com/gsyhei/GXCardView-Swift"><img src="https://img.shields.io/badge/platform-ios%209.0-yellow.svg"></a>
+<a href="https://github.com/gsyhei/GXCardView-Swift"><img src="https://img.shields.io/github/license/johnlui/Pitaya.svg?style=flat"></a>
+<a href="https://github.com/gsyhei/GXCardView-Swift"><img src="https://img.shields.io/badge/language-Swift%204.2-orange.svg"></a>
 </p>
 
 Usage in you Podfile:

@@ -11,7 +11,7 @@
 		33034C3A24DCCE6A00585225 /* banner1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 33034C3724DCCE6A00585225 /* banner1.jpeg */; };
 		33034C3B24DCCE6A00585225 /* banner0.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 33034C3824DCCE6A00585225 /* banner0.jpeg */; };
 		3323EC072507EAA100BD24ED /* GXCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3323EC042507EAA000BD24ED /* GXCardCell.swift */; };
-		3323EC082507EAA100BD24ED /* GXCardCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3323EC052507EAA000BD24ED /* GXCardCView.swift */; };
+		3323EC082507EAA100BD24ED /* GXCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3323EC052507EAA000BD24ED /* GXCardView.swift */; };
 		3323EC092507EAA100BD24ED /* GXCardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3323EC062507EAA000BD24ED /* GXCardLayout.swift */; };
 		3330854A2506F65E00549452 /* GXCardTestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333085482506F65E00549452 /* GXCardTestCell.swift */; };
 		3330854B2506F65E00549452 /* GXCardTestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 333085492506F65E00549452 /* GXCardTestCell.xib */; };
@@ -47,7 +47,7 @@
 		33034C3724DCCE6A00585225 /* banner1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = banner1.jpeg; sourceTree = "<group>"; };
 		33034C3824DCCE6A00585225 /* banner0.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = banner0.jpeg; sourceTree = "<group>"; };
 		3323EC042507EAA000BD24ED /* GXCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GXCardCell.swift; sourceTree = "<group>"; };
-		3323EC052507EAA000BD24ED /* GXCardCView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GXCardCView.swift; sourceTree = "<group>"; };
+		3323EC052507EAA000BD24ED /* GXCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GXCardView.swift; sourceTree = "<group>"; };
 		3323EC062507EAA000BD24ED /* GXCardLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GXCardLayout.swift; sourceTree = "<group>"; };
 		333085482506F65E00549452 /* GXCardTestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GXCardTestCell.swift; sourceTree = "<group>"; };
 		333085492506F65E00549452 /* GXCardTestCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GXCardTestCell.xib; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				3323EC042507EAA000BD24ED /* GXCardCell.swift */,
-				3323EC052507EAA000BD24ED /* GXCardCView.swift */,
+				3323EC052507EAA000BD24ED /* GXCardView.swift */,
 				3323EC062507EAA000BD24ED /* GXCardLayout.swift */,
 			);
 			name = "GXCardView-Swift";
@@ -308,7 +308,7 @@
 				33D6DD2824DA53B0008C7964 /* ViewController.swift in Sources */,
 				3330854A2506F65E00549452 /* GXCardTestCell.swift in Sources */,
 				3323EC092507EAA100BD24ED /* GXCardLayout.swift in Sources */,
-				3323EC082507EAA100BD24ED /* GXCardCView.swift in Sources */,
+				3323EC082507EAA100BD24ED /* GXCardView.swift in Sources */,
 				33D6DD2424DA53B0008C7964 /* AppDelegate.swift in Sources */,
 				33D6DD2624DA53B0008C7964 /* SceneDelegate.swift in Sources */,
 			);

@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var leftLabel: UILabel!
     @IBOutlet weak var rightLabel: UILabel!
     @IBOutlet weak var bottomLabel: UILabel!
-    @IBOutlet weak var cardView: GXCardCView!
+    @IBOutlet weak var cardView: GXCardView!
     var cellCount: Int = 10
     
     private lazy var cardLayout: GXCardLayout = {
@@ -52,34 +52,34 @@ class ViewController: UIViewController {
     @IBAction func topChange(_ sender: UISlider) {
         self.topLabel.text = String(Int(sender.value))
         self.cardLayout.cardInsets.top = CGFloat(sender.value)
-        self.cardView.collectionView.collectionViewLayout.invalidateLayout()
+        self.cardView.invalidateLayout()
     }
     
     @IBAction func leftChange(_ sender: UISlider) {
         self.leftLabel.text = String(Int(sender.value))
         self.cardLayout.cardInsets.left = CGFloat(sender.value)
-        self.cardView.collectionView.collectionViewLayout.invalidateLayout()
+        self.cardView.invalidateLayout()
     }
     
     @IBAction func rightChange(_ sender: UISlider) {
         self.rightLabel.text = String(Int(sender.value))
         self.cardLayout.cardInsets.right = CGFloat(sender.value)
-        self.cardView.collectionView.collectionViewLayout.invalidateLayout()
+        self.cardView.invalidateLayout()
     }
     
     @IBAction func bottomChange(_ sender: UISlider) {
         self.bottomLabel.text = String(Int(sender.value))
         self.cardLayout.cardInsets.bottom = CGFloat(sender.value)
-        self.cardView.collectionView.collectionViewLayout.invalidateLayout()
+        self.cardView.invalidateLayout()
     }
 }
 
 extension ViewController: GXCardCViewDataSource, GXCardCViewDelegate {
     // MARK: - GXCardViewDataSource
-    func numberOfItems(in cardView: GXCardCView) -> Int {
+    func numberOfItems(in cardView: GXCardView) -> Int {
         return self.cellCount
     }
-    func cardView(_ cardView: GXCardCView, cellForItemAt indexPath: IndexPath) -> GXCardCell {
+    func cardView(_ cardView: GXCardView, cellForItemAt indexPath: IndexPath) -> GXCardCell {
         let cell = cardView.dequeueReusableCell(for: indexPath, cellType: GXCardTestCell.self)
         cell.iconIView.image = UIImage(named: String(format: "banner%d.jpeg", indexPath.item%3))
         cell.numberLabel.text = String(indexPath.item)
@@ -90,31 +90,31 @@ extension ViewController: GXCardCViewDataSource, GXCardCViewDelegate {
     }
     
     // MARK: - GXCardViewDelegate
-    func cardView(_ cardView: GXCardCView, didRemoveLast cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection) {
+    func cardView(_ cardView: GXCardView, didRemoveLast cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection) {
         NSLog("didRemove forRowAtIndex = %d, direction = %d", index, direction.rawValue)
         if !cardView.cardLayout.isRepeat {
             cardView.reloadData()
             cardView.scrollToItem(at: 0, animated: false)
         }
     }
-    func cardView(_ cardView: GXCardCView, didRemove cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection) {
+    func cardView(_ cardView: GXCardView, didRemove cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection) {
         NSLog("didRemove forRowAtIndex = %d, direction = %d", index, direction.rawValue)
         if !cardView.cardLayout.isRepeat && index == 8 {
             self.cellCount = 20
             cardView.reloadData()
         }
     }
-    func cardView(_ cardView: GXCardCView, didMove cell: GXCardCell, forItemAt index: Int, move point: CGPoint, direction: GXCardCell.SwipeDirection) {
+    func cardView(_ cardView: GXCardView, didMove cell: GXCardCell, forItemAt index: Int, move point: CGPoint, direction: GXCardCell.SwipeDirection) {
         NSLog("move point = %@,  direction = %ld", point.debugDescription, direction.rawValue)
         if let toCell = cell as? GXCardTestCell {
             toCell.leftLabel.isHidden = !(direction == .right)
             toCell.rightLabel.isHidden = !(direction == .left)
         }
     }
-    func cardView(_ cardView: GXCardCView, didDisplay cell: GXCardCell, forItemAt index: Int) {
+    func cardView(_ cardView: GXCardView, didDisplay cell: GXCardCell, forItemAt index: Int) {
         NSLog("didDisplay forRowAtIndex = %d", index)
     }
-    func cardView(_ cardView: GXCardCView, didSelectItemAt index: Int) {
+    func cardView(_ cardView: GXCardView, didSelectItemAt index: Int) {
         NSLog("didSelectItemAt index = %d", index)
     }
 }

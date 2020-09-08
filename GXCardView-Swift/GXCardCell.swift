@@ -32,7 +32,7 @@ class GXCardCell: UICollectionViewCell {
     private var currentPoint: CGPoint = .zero
     
     open weak var delegate: GXCardCellDelagate?
-    open weak var cardView: GXCardCView!
+    open weak var cardView: GXCardView!
     open var maxAngle: CGFloat = 0
     open var maxRemoveDistance: CGFloat = 0
     
@@ -52,7 +52,7 @@ class GXCardCell: UICollectionViewCell {
     }
     
     @objc private func panGestureRecognizer(pan: UIPanGestureRecognizer) {
-        guard self.isShowFirstCell() else { return }
+        guard self.cardView.isShowFirst(cell: self) else { return }
         switch pan.state {
         case .began:
             self.currentPoint = .zero
@@ -76,11 +76,6 @@ extension GXCardCell {
 }
 
 fileprivate extension GXCardCell {
-    func isShowFirstCell() -> Bool {
-        let index = self.cardView.collectionView.indexPath(for: self)?.item ?? 0
-        let firstIndex = Int(ceil(self.cardView.collectionView.contentOffset.y/self.cardView.collectionView.frame.height))
-        return index == firstIndex
-    }
     func degreesToRadians(angle: CGFloat) -> CGFloat {
         return (angle / 180.0 * CGFloat.pi)
     }
@@ -94,7 +89,7 @@ fileprivate extension GXCardCell {
         }
     }
     func endCenter(direction: SwipeDirection, view: UIView) -> CGPoint {
-        let rect: CGRect = self.cardView.collectionView.convert(self.frame, to: self.cardView)
+        let rect: CGRect = self.cardView.rectCardViewForCell(self)
         let centerY: CGFloat = view.center.y + rect.origin.y - view.frame.origin.y
         switch direction {
         case .left:

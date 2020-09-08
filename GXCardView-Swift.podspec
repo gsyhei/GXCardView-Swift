@@ -9,14 +9,14 @@
 Pod::Spec.new do |s|
 
   s.name          = "GXCardView-Swift"
-  s.version       = "1.0.1"
+  s.version       = "1.1.0"
   s.swift_version = "4.2"
   s.summary       = "一个卡片式布局，类似（探探附近/QQ颜值匹配）等..."
   s.homepage      = "https://github.com/gsyhei/GXCardView-Swift"
   s.license       = { :type => "MIT", :file => "LICENSE" }
   s.author        = { "Gin" => "279694479@qq.com" }
   s.platform      = :ios, "9.0"
-  s.source        = { :git => "https://github.com/gsyhei/GXCardView-Swift.git", :tag => "1.0.1" }
+  s.source        = { :git => "https://github.com/gsyhei/GXCardView-Swift.git", :tag => "1.1.0" }
   s.requires_arc  = true
   s.source_files  = "GXCardView-Swift"
   s.frameworks    = "Foundation","UIKit"

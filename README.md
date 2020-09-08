@@ -6,7 +6,7 @@
 先上demo菜单效果（比较朴素，请别在意）
 --
 <p align="left">
-<a href="https://github.com/gsyhei/GXRefresh"><img src="https://img.shields.io/badge/platform-ios-yellow.svg"></a>
+<a href><img src="https://github.com/gsyhei/GXCardView-Swift/blob/master/QQ.jpeg"></a>
 </p>
 
 ![](/GXCardView-Swift.gif '描述')

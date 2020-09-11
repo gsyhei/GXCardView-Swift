@@ -15,6 +15,7 @@ protocol GXCardCViewDataSource: NSObjectProtocol {
 
 @objc protocol GXCardCViewDelegate: NSObjectProtocol {
     @objc optional func cardView(_ cardView: GXCardView, didSelectItemAt index: Int)
+    @objc optional func cardView(_ cardView: GXCardView, willRemove cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection)
     @objc optional func cardView(_ cardView: GXCardView, didRemove cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection)
     @objc optional func cardView(_ cardView: GXCardView, didRemoveLast cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection)
     @objc optional func cardView(_ cardView: GXCardView, didDisplay cell: GXCardCell, forItemAt index: Int)
@@ -65,16 +66,22 @@ extension GXCardView {
         }
         return cell
     }
+    final func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
+        self.collectionView.performBatchUpdates({
+        }) { [weak self] (finished) in
+            self?.collectionView.setContentOffset(contentOffset, animated: animated)
+        }
+    }
     final func scrollToItem(at index: Int, animated: Bool) {
         if animated && index > 0 {
             let currentIndex: Int = Int(round(self.collectionView.contentOffset.y / self.collectionView.frame.height))
             if abs(currentIndex - index) > 1 {
                 let offsetY: CGFloat = CGFloat(index - 1) * self.collectionView.frame.height
-                self.collectionView.setContentOffset(CGPoint(x: 0, y: offsetY), animated: false)
+                self.setContentOffset(CGPoint(x: 0, y: offsetY), animated: false)
             }
         }
         let offsetY: CGFloat = CGFloat(index) * self.collectionView.frame.height
-        self.collectionView.setContentOffset(CGPoint(x: 0, y: offsetY), animated: animated)
+        self.setContentOffset(CGPoint(x: 0, y: offsetY), animated: animated)
     }
     final func removeTopCardViewCell(swipe direction: GXCardCell.SwipeDirection) {
         let index: Int = Int(round(self.collectionView.contentOffset.y / self.collectionView.frame.height))
@@ -104,6 +111,7 @@ extension GXCardView: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.dataSource?.cardView(self, cellForItemAt: indexPath)
+        cell?.isPanAnimatedEnd = self.cardLayout.isPanAnimatedEnd
         cell?.maxRemoveDistance = self.cardLayout.maxRemoveDistance
         cell?.maxAngle = self.cardLayout.maxAngle
         cell?.cardView = self
@@ -144,6 +152,12 @@ extension GXCardView: UIScrollViewDelegate {
 }
 
 extension GXCardView: GXCardCellDelagate {
+    func cardCell(_ cell: GXCardCell, willRemoveAt direction: GXCardCell.SwipeDirection) {
+        let index = self.collectionView.indexPath(for: cell)?.item ?? 0
+        if (delegate?.responds(to: #selector(delegate?.cardView(_:willRemove:forItemAt:direction:))) ?? false) {
+            self.delegate?.cardView?(self, willRemove: cell, forItemAt: index, direction: direction)
+        }
+    }
     func cardCell(_ cell: GXCardCell, didRemoveAt direction: GXCardCell.SwipeDirection) {
         let index = self.collectionView.indexPath(for: cell)?.item ?? 0
         let lastIndex = (self.dataSource?.numberOfItems(in: self) ?? 0) - 1

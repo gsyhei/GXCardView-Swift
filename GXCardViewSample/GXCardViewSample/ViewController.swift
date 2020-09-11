@@ -21,7 +21,8 @@ class ViewController: UIViewController {
         layout.visibleCount = 4
         layout.maxAngle = 15.0
         layout.isRepeat = false
-        layout.maxRemoveDistance = self.cardView.frame.width/4
+        layout.isPanAnimatedEnd = false //必须动画结束才可再次拖拽，为true时可不停的拖拽
+        layout.maxRemoveDistance = self.view.frame.width/4
         layout.cardInsets = UIEdgeInsets(top: 10, left: 10, bottom: -10, right: 10)
         
         return layout
@@ -97,9 +98,16 @@ extension ViewController: GXCardCViewDataSource, GXCardCViewDelegate {
             cardView.scrollToItem(at: 0, animated: false)
         }
     }
+    func cardView(_ cardView: GXCardView, willRemove cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection) {
+        NSLog("willRemove forRowAtIndex = %d, direction = %d", index, direction.rawValue)
+        if let toCell = cell as? GXCardTestCell {
+            toCell.leftLabel.isHidden = !(direction == .right)
+            toCell.rightLabel.isHidden = !(direction == .left)
+        }
+    }
     func cardView(_ cardView: GXCardView, didRemove cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection) {
         NSLog("didRemove forRowAtIndex = %d, direction = %d", index, direction.rawValue)
-        if !cardView.cardLayout.isRepeat && index == 8 {
+        if !cardView.cardLayout.isRepeat && index == 9 {
             self.cellCount = 20
             cardView.reloadData()
         }

@@ -34,6 +34,8 @@ class GXCardLayout: UICollectionViewLayout {
     open var isRepeat: Bool = false
     /// 最大移除距离(默认屏幕的1/4)
     open var maxRemoveDistance: CGFloat = GX_ScreenWidth * 0.25
+    /// 是否需要移除动画结束才可以再次拖拽
+    open var isPanAnimatedEnd: Bool = false
 }
 
 extension GXCardLayout {

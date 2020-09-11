@@ -23,6 +23,7 @@ extension GXCardCell {
 }
 
 protocol GXCardCellDelagate: NSObjectProtocol {
+    func cardCell(_ cell: GXCardCell, willRemoveAt direction: GXCardCell.SwipeDirection)
     func cardCell(_ cell: GXCardCell, didRemoveAt direction: GXCardCell.SwipeDirection)
     func cardCell(_ cell: GXCardCell, didMoveAt point: CGPoint, direction: GXCardCell.SwipeDirection)
 }
@@ -35,6 +36,7 @@ class GXCardCell: UICollectionViewCell {
     open weak var cardView: GXCardView!
     open var maxAngle: CGFloat = 0
     open var maxRemoveDistance: CGFloat = 0
+    open var isPanAnimatedEnd: Bool = false
     
     convenience override init(frame: CGRect = .zero) {
         self.init(frame: frame)
@@ -122,6 +124,7 @@ fileprivate extension GXCardCell {
         }
     }
     func didPanStateEnded() {
+        self.cardView.isUserInteractionEnabled = (false || !self.isPanAnimatedEnd)
         if (self.currentPoint.x < -self.maxRemoveDistance) {
             self.remove(direction: .left, isPan: true)
         }
@@ -140,6 +143,8 @@ fileprivate extension GXCardCell {
             options: .curveEaseOut,
             animations: {
                 self.transform = self.originalTransform
+        }, completion: { (finished) in
+            self.cardView.isUserInteractionEnabled = true
         })
     }
     func didRemove(direction: SwipeDirection) {
@@ -148,7 +153,8 @@ fileprivate extension GXCardCell {
         self.delegate?.cardCell(self, didRemoveAt: direction)
     }
     func remove(direction: SwipeDirection, isPan stateEnded: Bool) {
-        let snapshotView = self.snapshotView(afterScreenUpdates: false) ?? UIView()
+        self.delegate?.cardCell(self, willRemoveAt: direction)
+        let snapshotView = self.snapshotView(afterScreenUpdates: true) ?? UIView()
         snapshotView.transform = self.transform
         self.cardView.addSubview(snapshotView)
         let toCenter = self.endCenter(direction: direction, view: snapshotView)
@@ -167,6 +173,7 @@ fileprivate extension GXCardCell {
             }
         }, completion: { (finished) in
             snapshotView.removeFromSuperview()
+            self.cardView.isUserInteractionEnabled = true
         })
     }
 }

@@ -23,7 +23,7 @@ let GX_SpringVelocity: CGFloat       = 0.8
 let GX_ScreenWidth  = UIScreen.main.bounds.size.width
 let GX_ScreenHeight = UIScreen.main.bounds.size.height
 
-class GXCardLayout: UICollectionViewLayout {
+public class GXCardLayout: UICollectionViewLayout {
     /// 卡片可见数量(默认3)
     open var visibleCount: Int = 3
     /// 卡片与卡片之间的insets(从上至下，正负皆可)
@@ -38,7 +38,7 @@ class GXCardLayout: UICollectionViewLayout {
     open var isPanAnimatedEnd: Bool = false
 }
 
-extension GXCardLayout {
+public extension GXCardLayout {
     
     override func prepare() {
         self.collectionView?.bounces = false

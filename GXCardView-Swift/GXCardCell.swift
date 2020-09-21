@@ -14,7 +14,7 @@ fileprivate extension CGPoint {
     }
 }
 
-extension GXCardCell {
+public extension GXCardCell {
     @objc enum SwipeDirection: Int {
         case none  = 0
         case left  = 1
@@ -28,11 +28,11 @@ protocol GXCardCellDelagate: NSObjectProtocol {
     func cardCell(_ cell: GXCardCell, didMoveAt point: CGPoint, direction: GXCardCell.SwipeDirection)
 }
 
-class GXCardCell: UICollectionViewCell {
+public class GXCardCell: UICollectionViewCell {
     private var originalTransform: CGAffineTransform = .identity
     private var currentPoint: CGPoint = .zero
     
-    open weak var delegate: GXCardCellDelagate?
+    weak var delegate: GXCardCellDelagate?
     open weak var cardView: GXCardView!
     open var maxAngle: CGFloat = 0
     open var maxRemoveDistance: CGFloat = 0
@@ -43,7 +43,7 @@ class GXCardCell: UICollectionViewCell {
         self.addPanGestureRecognizer()
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         self.addPanGestureRecognizer()
     }
@@ -71,7 +71,7 @@ class GXCardCell: UICollectionViewCell {
     }
 }
 
-extension GXCardCell {
+public extension GXCardCell {
     func remove(swipe direction: SwipeDirection) {
         self.remove(direction: direction, isPan: false)
     }

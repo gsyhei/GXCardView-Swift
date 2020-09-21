@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol GXCardCViewDataSource: NSObjectProtocol {
+public protocol GXCardCViewDataSource: NSObjectProtocol {
     func numberOfItems(in cardView: GXCardView) -> Int
     func cardView(_ cardView: GXCardView, cellForItemAt indexPath: IndexPath) -> GXCardCell
 }
 
-@objc protocol GXCardCViewDelegate: NSObjectProtocol {
+@objc public protocol GXCardCViewDelegate: NSObjectProtocol {
     @objc optional func cardView(_ cardView: GXCardView, didSelectItemAt index: Int)
     @objc optional func cardView(_ cardView: GXCardView, willRemove cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection)
     @objc optional func cardView(_ cardView: GXCardView, didRemove cell: GXCardCell, forItemAt index: Int, direction: GXCardCell.SwipeDirection)
@@ -22,7 +22,7 @@ protocol GXCardCViewDataSource: NSObjectProtocol {
     @objc optional func cardView(_ cardView: GXCardView, didMove cell: GXCardCell, forItemAt index: Int, move point: CGPoint, direction: GXCardCell.SwipeDirection)
 }
 
-class GXCardView: UIView {
+public class GXCardView: UIView {
     weak var dataSource: GXCardCViewDataSource?
     weak var delegate: GXCardCViewDelegate?
     private(set) var cardLayout: GXCardLayout!
@@ -44,7 +44,7 @@ class GXCardView: UIView {
     }
 }
 
-extension GXCardView {
+public extension GXCardView {
     final func register<T: UICollectionViewCell>(classCellType: T.Type) {
         let cellID = String(describing: classCellType)
         self.collectionView.register(classCellType, forCellWithReuseIdentifier: cellID)
@@ -106,10 +106,10 @@ extension GXCardView {
 
 extension GXCardView: UICollectionViewDataSource, UICollectionViewDelegate {
     // MARK: - UICollectionViewDataSource
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.dataSource?.numberOfItems(in: self) ?? 0
     }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.dataSource?.cardView(self, cellForItemAt: indexPath)
         cell?.isPanAnimatedEnd = self.cardLayout.isPanAnimatedEnd
         cell?.maxRemoveDistance = self.cardLayout.maxRemoveDistance
@@ -119,12 +119,12 @@ extension GXCardView: UICollectionViewDataSource, UICollectionViewDelegate {
         return cell ?? UICollectionViewCell()
     }
     // MARK: - UICollectionViewDelegate
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (delegate?.responds(to: #selector(delegate?.cardView(_:didSelectItemAt:))) ?? false) {
             self.delegate?.cardView?(self, didSelectItemAt: indexPath.item)
         }
     }
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if (delegate?.responds(to: #selector(delegate?.cardView(_:didDisplay:forItemAt:))) ?? false) {
             self.delegate?.cardView?(self, didDisplay: cell as! GXCardCell, forItemAt: indexPath.item)
         }
@@ -133,7 +133,7 @@ extension GXCardView: UICollectionViewDataSource, UICollectionViewDelegate {
 
 extension GXCardView: UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         guard self.cardLayout.isRepeat else { return }
         let index: Int = Int(round(scrollView.contentOffset.y / scrollView.frame.height))
         let lastIndex = (self.dataSource?.numberOfItems(in: self) ?? 0)
@@ -141,7 +141,7 @@ extension GXCardView: UIScrollViewDelegate {
             self.scrollToItem(at: 0, animated: false)
         }
     }
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard self.cardLayout.isRepeat else { return }
         let index: Int = Int(round(scrollView.contentOffset.y / scrollView.frame.height))
         let lastIndex = (self.dataSource?.numberOfItems(in: self) ?? 0)

@@ -23,11 +23,11 @@ public protocol GXCardCViewDataSource: NSObjectProtocol {
 }
 
 public class GXCardView: UIView {
-    weak var dataSource: GXCardCViewDataSource?
-    weak var delegate: GXCardCViewDelegate?
-    private(set) var cardLayout: GXCardLayout!
-    private var collectionView: UICollectionView!
-    
+    public weak var dataSource: GXCardCViewDataSource?
+    public weak var delegate: GXCardCViewDelegate?
+    public var cardLayout: GXCardLayout!
+    public var collectionView: UICollectionView!
+
     convenience init(frame: CGRect, cardLayout layout: GXCardLayout) {
         self.init(frame:frame)
         self.setCardLayout(cardLayout: layout)

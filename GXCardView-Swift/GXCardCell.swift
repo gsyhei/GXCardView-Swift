@@ -31,14 +31,13 @@ protocol GXCardCellDelagate: NSObjectProtocol {
 public class GXCardCell: UICollectionViewCell {
     private var originalTransform: CGAffineTransform = .identity
     private var currentPoint: CGPoint = .zero
-    
     weak var delegate: GXCardCellDelagate?
-    open weak var cardView: GXCardView!
-    open var maxAngle: CGFloat = 0
-    open var maxRemoveDistance: CGFloat = 0
-    open var isPanAnimatedEnd: Bool = false
+    weak var cardView: GXCardView!
+    var maxAngle: CGFloat = 0
+    var maxRemoveDistance: CGFloat = 0
+    var isPanAnimatedEnd: Bool = false
     
-    convenience override init(frame: CGRect = .zero) {
+    public convenience override init(frame: CGRect = .zero) {
         self.init(frame: frame)
         self.addPanGestureRecognizer()
     }

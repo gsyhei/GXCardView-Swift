@@ -28,9 +28,9 @@ pod 'GXCardView-Swift'
 * 其它版本 [OC版本](https://github.com/gsyhei/GXCardView)
 ```
 
-```
 关于会变形的问题，这里要说明一下。为了使动画平滑故而使用的CGAffineTransform，那么想要使内容不变形必须按照实际情况设置cardInsets: UIEdgeInsets。
 假设Card的CGSize(w, h), 那么设置的 (top + bottom) / w == (left + right) / h，这样每个cardCell的长宽比例相等才能不变形。
+```
 --
 
 pod 'GXCardView'
